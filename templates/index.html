@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'icofile.ico')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+    <audio src="{{url_for('static',filename='bell.mp3')}}" id="playmusic" filename="bell.mp3"
+        type="audio/mpeg">audio</audio>
+    <title>STOCK ANALYSIS APPLICATION</title>
+</head>
+
+<body>
+
+    <section id="sidebar">
+
+
+        <!-- sidebar -->
+        <ul class="side-menu top">
+<!-- 
+            <li class="active">
+                <a href="/index">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="active">
+                <a href="/home">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Home</span>
+                </a>
+            </li>
+
+
+            <li>
+            
+                <i class='bx bxs-shopping-bag-alt'></i>
+                <button type="button" class="btn btn-primary" onclick="bullish_stocks_r2();">bullish_stocks_r2</button>
+            
+            </li>
+
+
+
+
+            <li>
+            
+                <i class='bx bxs-shopping-bag-alt'></i>
+                <button type="button" class="btn btn-primary" onclick="bullish_stocks_r3();">bullish_stocks_r3</button>
+            
+            </li> -->
+
+    
+        </ul>
+
+
+    </section>
+
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+           
+
+        </nav>
+        <!-- NAVBAR -->
+
+        <main>
+    
+        <!-- <button type="button"  onclick="openr3();">r3links</button>
+        <button type="button"  onclick="openr2();">r2links</button>
+        <button type="button"  onclick="cont_r2();">cont_r2</button>
+        <button type="button"  onclick="cont_r3();">cont_r3</button> -->
+        <!-- <button type="button"  onclick="vwap_r3_setup();">vwap_r3_setup</button> -->
+        <!-- <button type="button"  onclick="openr2();">r2links</button> -->
+        <!-- <button type="button"  onclick="clear_visited();">clear_visited</button> -->
+
+        <a style="margin-right: 10px;"  onclick="vwap_r3_setup()" href="#">fetch data</a>
+        <a style="margin-right: 10px;"  onclick="openr2()()" href="#">open_all</a>
+        <a style="margin-right: 10px;"  onclick="show_visited()" href="#">show_visited</a>
+        <a style="margin-right: 10px;"  onclick="clear_visited()" href="#">clear_visited</a>
+        <a href="/">.</a>
+
+        <!-- call form -->
+        <form id="your-form" action="{{url_for("option_strike")}}" method="post">
+
+            <select id="select_symbol" name="select_symbol">
+                <option value="">Select</option>
+                <option value="AARTIIND">AARTIIND</option>
+                <option value="ABBOTINDIA">ABBOTINDIA</option>
+                <option value="ABFRL">ABFRL</option>
+                <option value="ACC">ACC</option>
+                <option value="ADANIENT">ADANIENT</option>
+                <option value="ADANIPORTS">ADANIPORTS</option>
+                <option value="ALKEM">ALKEM</option>
+                <option value="AMARAJABAT">AMARAJABAT</option>
+                <option value="AMBUJACEM">AMBUJACEM</option>
+                <option value="APLLTD">APLLTD</option>
+                <option value="APOLLOHOSP">APOLLOHOSP</option>
+                <option value="APOLLOTYRE">APOLLOTYRE</option>
+                <option value="ASHOKLEY">ASHOKLEY</option>
+                <option value="ASIANPAINT">ASIANPAINT</option>
+                <option value="ASTRAL">ASTRAL</option>
+                <option value="AUBANK">AUBANK</option>
+                <option value="AUROPHARMA">AUROPHARMA</option>
+                <option value="AXISBANK">AXISBANK</option>
+                <option value="BAJAJ-AUTO">BAJAJ-AUTO</option>
+                <option value="BAJAJFINSV">BAJAJFINSV</option>
+                <option value="BAJFINANCE">BAJFINANCE</option>
+                <option value="BALKRISIND">BALKRISIND</option>
+                <option value="BANDHANBNK">BANDHANBNK</option>
+                <option value="BANKBARODA">BANKBARODA</option>
+                <option value="BATAINDIA">BATAINDIA</option>
+                <option value="BEL">BEL</option>
+                <option value="BERGEPAINT">BERGEPAINT</option>
+                <option value="BHARATFORG">BHARATFORG</option>
+                <option value="BHARTIARTL">BHARTIARTL</option>
+                <option value="BHEL">BHEL</option>
+                <option value="BIOCON">BIOCON</option>
+                <option value="BOSCHLTD">BOSCHLTD</option>
+                <option value="BPCL">BPCL</option>
+                <option value="BRITANNIA">BRITANNIA</option>
+                <option value="CADILAHC">CADILAHC</option>
+                <option value="CANBK">CANBK</option>
+                <option value="CANFINHOME">CANFINHOME</option>
+                <option value="CHOLAFIN">CHOLAFIN</option>
+                <option value="CIPLA">CIPLA</option>
+                <option value="COALINDIA">COALINDIA</option>
+                <option value="COFORGE">COFORGE</option>
+                <option value="COLPAL">COLPAL</option>
+                <option value="CONCOR">CONCOR</option>
+                <option value="COROMANDEL">COROMANDEL</option>
+                <option value="CROMPTON">CROMPTON</option>
+                <option value="CUB">CUB</option>
+                <option value="CUMMINSIND">CUMMINSIND</option>
+                <option value="DABUR">DABUR</option>
+                <option value="DALBHARAT">DALBHARAT</option>
+                <option value="DEEPAKNTR">DEEPAKNTR</option>
+                <option value="DELTACORP">DELTACORP</option>
+                <option value="DIVISLAB">DIVISLAB</option>
+                <option value="DIXON">DIXON</option>
+                <option value="DLF">DLF</option>
+                <option value="DRREDDY">DRREDDY</option>
+                <option value="EICHERMOT">EICHERMOT</option>
+                <option value="ESCORTS">ESCORTS</option>
+                <option value="EXIDEIND">EXIDEIND</option>
+                <option value="FEDERALBNK">FEDERALBNK</option>
+                <option value="GAIL">GAIL</option>
+                <option value="GLENMARK">GLENMARK</option>
+                <option value="GMRINFRA">GMRINFRA</option>
+                <option value="GODREJCP">GODREJCP</option>
+                <option value="GODREJPROP">GODREJPROP</option>
+                <option value="GRANULES">GRANULES</option>
+                <option value="GRASIM">GRASIM</option>
+                <option value="GUJGASLTD">GUJGASLTD</option>
+                <option value="HAL">HAL</option>
+                <option value="HAVELLS">HAVELLS</option>
+                <option value="HCLTECH">HCLTECH</option>
+                <option value="HDFC">HDFC</option>
+                <option value="HDFCAMC">HDFCAMC</option>
+                <option value="HDFCBANK">HDFCBANK</option>
+                <option value="HDFCLIFE">HDFCLIFE</option>
+                <option value="HEROMOTOCO">HEROMOTOCO</option>
+                <option value="HINDALCO">HINDALCO</option>
+                <option value="HINDPETRO">HINDPETRO</option>
+                <option value="HINDUNILVR">HINDUNILVR</option>
+                <option value="IBULHSGFIN">IBULHSGFIN</option>
+                <option value="ICICIBANK">ICICIBANK</option>
+                <option value="ICICIGI">ICICIGI</option>
+                <option value="ICICIPRULI">ICICIPRULI</option>
+                <option value="IDEA">IDEA</option>
+                <option value="IDFCFIRSTB">IDFCFIRSTB</option>
+                <option value="IEX">IEX</option>
+                <option value="IGL">IGL</option>
+                <option value="INDHOTEL">INDHOTEL</option>
+                <option value="INDIACEM">INDIACEM</option>
+                <option value="INDIAMART">INDIAMART</option>
+                <option value="INDIGO">INDIGO</option>
+                <option value="INDUSINDBK">INDUSINDBK</option>
+                <option value="INDUSTOWER">INDUSTOWER</option>
+                <option value="INFY">INFY</option>
+                <option value="IOC">IOC</option>
+                <option value="IPCALAB">IPCALAB</option>
+                <option value="IRCTC">IRCTC</option>
+                <option value="ITC">ITC</option>
+                <option value="JINDALSTEL">JINDALSTEL</option>
+                <option value="JKCEMENT">JKCEMENT</option>
+                <option value="JSWSTEEL">JSWSTEEL</option>
+                <option value="JUBLFOOD">JUBLFOOD</option>
+                <option value="KOTAKBANK">KOTAKBANK</option>
+                <option value="L&amp;TFH">L&amp;TFH</option>
+                <option value="LALPATHLAB">LALPATHLAB</option>
+                <option value="LICHSGFIN">LICHSGFIN</option>
+                <option value="LT">LT</option>
+                <option value="LTI">LTI</option>
+                <option value="LTTS">LTTS</option>
+                <option value="LUPIN">LUPIN</option>
+                <option value="M&amp;M">M&amp;M</option>
+                <option value="M&amp;MFIN">M&amp;MFIN</option>
+                <option value="MANAPPURAM">MANAPPURAM</option>
+                <option value="MARICO">MARICO</option>
+                <option value="MARUTI">MARUTI</option>
+                <option value="MCDOWELL-N">MCDOWELL-N</option>
+                <option value="MCX">MCX</option>
+                <option value="METROPOLIS">METROPOLIS</option>
+                <option value="MFSL">MFSL</option>
+                <option value="MGL">MGL</option>
+                <option value="MINDTREE">MINDTREE</option>
+                <option value="MOTHERSUMI">MOTHERSUMI</option>
+                <option value="MPHASIS">MPHASIS</option>
+                <option value="MRF">MRF</option>
+                <option value="MUTHOOTFIN">MUTHOOTFIN</option>
+                <option value="NAM-INDIA">NAM-INDIA</option>
+                <option value="NATIONALUM">NATIONALUM</option>
+                <option value="NAUKRI">NAUKRI</option>
+                <option value="NAVINFLUOR">NAVINFLUOR</option>
+                <option value="NESTLEIND">NESTLEIND</option>
+                <option value="NMDC">NMDC</option>
+                <option value="NTPC">NTPC</option>
+                <option value="OBEROIRLTY">OBEROIRLTY</option>
+                <option value="OFSS">OFSS</option>
+                <option value="ONGC">ONGC</option>
+                <option value="PAGEIND">PAGEIND</option>
+                <option value="PEL">PEL</option>
+                <option value="PERSISTENT">PERSISTENT</option>
+                <option value="PETRONET">PETRONET</option>
+                <option value="PFC">PFC</option>
+                <option value="PFIZER">PFIZER</option>
+                <option value="PIDILITIND">PIDILITIND</option>
+                <option value="PIIND">PIIND</option>
+                <option value="PNB">PNB</option>
+                <option value="POLYCAB">POLYCAB</option>
+                <option value="POWERGRID">POWERGRID</option>
+                <option value="PVR">PVR</option>
+                <option value="RAMCOCEM">RAMCOCEM</option>
+                <option value="RBLBANK">RBLBANK</option>
+                <option value="RECLTD">RECLTD</option>
+                <option value="RELIANCE">RELIANCE</option>
+                <option value="SAIL">SAIL</option>
+                <option value="SBILIFE">SBILIFE</option>
+                <option value="SBIN">SBIN</option>
+                <option value="SHREECEM">SHREECEM</option>
+                <option value="SIEMENS">SIEMENS</option>
+                <option value="SRF">SRF</option>
+                <option value="SRTRANSFIN">SRTRANSFIN</option>
+                <option value="STAR">STAR</option>
+                <option value="SUNPHARMA">SUNPHARMA</option>
+                <option value="SUNTV">SUNTV</option>
+                <option value="SYNGENE">SYNGENE</option>
+                <option value="TATACHEM">TATACHEM</option>
+                <option value="TATACONSUM">TATACONSUM</option>
+                <option value="TATAMOTORS">TATAMOTORS</option>
+                <option value="TATAPOWER">TATAPOWER</option>
+                <option value="TATASTEEL">TATASTEEL</option>
+                <option value="TCS">TCS</option>
+                <option value="TECHM">TECHM</option>
+                <option value="TITAN">TITAN</option>
+                <option value="TORNTPHARM">TORNTPHARM</option>
+                <option value="TORNTPOWER">TORNTPOWER</option>
+                <option value="TRENT">TRENT</option>
+                <option value="TVSMOTOR">TVSMOTOR</option>
+                <option value="UBL">UBL</option>
+                <option value="ULTRACEMCO">ULTRACEMCO</option>
+                <option value="UPL">UPL</option>
+                <option value="VEDL">VEDL</option>
+                <option value="VOLTAS">VOLTAS</option>
+                <option value="WIPRO">WIPRO</option>
+                <option value="ZEEL">ZEEL</option>
+            </select>
+           
+
+            <button  style="max-width: 200px;color: black;min-width: 100px;" 
+                type="submit">hit me</button>
+        </form>
+
+            
+
+        <!-- tables -->
+        <div>
+                        <div id="table0-div"></div>
+                        <div id="table1-div"></div>
+                        <div id="table2-div"></div>
+                        <div id="table3-div"></div>
+                        <div id="table4-div"></div>
+                        <div id="table5-div"></div>
+        </div>
+
+                
+        </main>
+
+
+    </section>
+
+    <script>
+
+
+
+        function openr2(){
+        var x = document.getElementsByClassName("r2stocks");
+            for (let index = 0; index < x.length; index++) {
+                const ele = (x[index]);
+            
+                link = ($(ele).attr("href"));
+                window.open(link, "_blank");
+            }
+        }
+        
+        function cont_r2(){
+             bullish_stocks_r2();
+            setTimeout(cont_r2, 10000);
+        }
+       
+        function cont_r3(){
+             bullish_stocks_r3();
+            setTimeout(cont_r3, 5000);
+        }
+
+        function bullish_stocks_r2() {
+
+                    let tableDiv = document.getElementById("table3-div");
+                    tableDiv.innerHTML = `                    
+                                <img src="../static/excited.gif" alt="failed" width="100" height="100">
+                    
+                        `
+                        $.ajax({
+                            type: "POST",
+                            url: '/bullish_stocks_r2',
+                            success: function (data) {
+                                let obj = JSON.parse(data)
+                                let tableDiv = document.getElementById("table3-div");
+                                let tableRows = "";
+                                Object.keys(obj).map(key => {
+                                    tableRows += `
+                                                    <tr>
+                                                    <td><a href="${obj[key]}"  class="r2stocks" target="_blank">${key}</a></td>    
+                                                    </tr>
+                                                `
+                                })
+                                tableDiv.innerHTML = `
+                                                    <table style="float:left;margin-right: 20px">
+                                                        <th>r2</th>
+                                                        ${tableRows}
+                                                    </table>
+                                            `
+                            }
+                        });
+        }
+
+        function openr3(){
+        var x = document.getElementsByClassName("r3stocks");
+            for (let index = 0; index < x.length; index++) {
+                const ele = (x[index]);
+                link = ($(ele).attr("href"));
+                window.open(link, "_blank");
+            }
+        }
+
+        function bullish_stocks_r3() {
+
+
+
+        let tableDiv = document.getElementById("table2-div");
+        // tableDiv.innerHTML = `                    
+        //             <img src="../static/excited.gif" alt="failed" width="100" height="100">
+        
+        //     `
+            
+
+        $.ajax({
+            type: "POST",
+            url: '/bullish_stocks_r3',
+            success: function (data) {
+
+                let obj = JSON.parse(data)
+                // obj0 = obj[0];
+                // obj1 = obj[1];
+                // console.log(obj)
+
+                let tableDiv = document.getElementById("table2-div");
+
+                let tableRows = "";
+                Object.keys(obj).map(key => {
+                    tableRows += `
+                                    <tr>
+                                    <td><a href="${obj[key]}" class="r3stocks" target="_blank">${key}</a></td>    
+                                    </tr>
+                                `
+                })
+                tableDiv.innerHTML = `
+
+                            
+                            
+                                    
+                                    <table style="float:left;margin-right: 20px">
+                                        <th>r3</th>
+                                        ${tableRows}
+                                    </table>
+
+                         
+
+                            `
+
+
+
+            }
+        });
+    }
+
+        $("#your-form").submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                    url: '/option_strike',
+                    data: $("#your-form").serialize(),
+                    success: function (data) {
+                        // document.getElementById('playmusic').play();
+                        
+                        let obj = JSON.parse(data)
+
+                        console.log(obj);
+                        let tableDiv = document.getElementById("table0-div");
+
+                        let tableRows = "";
+                        Object.keys(obj).map(key => {
+                            tableRows += `
+                                <tr>
+                                <td><a href="${obj[key]}" target="_blank">${key}</a></td>        
+                                </tr>
+                            `
+                        })
+                        tableDiv.innerHTML = `
+                        <div class="table-data">
+                            
+                                    <table style="float:left">
+                                        ${tableRows}
+                                    </table>
+                        </div>
+                        `
+                    }
+                });
+            });
+
+        function vwap_r3_setup() {
+
+                    let tableDiv = document.getElementById("table4-div");
+                    // tableDiv.innerHTML = `                    
+                    //             <img src="../static/excited.gif" alt="failed" width="100" height="100">
+                    
+                    //     `
+                        $.ajax({
+                            type: "POST",
+                            url: '/vwap_r3_setup',
+                            success: function (data) {
+                                let obj = JSON.parse(data)
+                                // console.log(obj)
+                                let tableDiv = document.getElementById("table4-div");
+                                let tableRows = "";
+                                Object.keys(obj).map(key => {
+
+
+                                    // check if key present in localstoarage
+                                    if (localStorage.getItem(key) == null) {
+                                        // localStorage.setItem(key,key);
+                                        console.log(key)
+                                        tableRows += `
+                                                        <tr>  
+                                                        <td><a onclick="process_link_click('${key}','${obj[key]}')" href="#">${key}</a></td>
+                        
+                                                        </tr>
+                                                    `
+                                    }
+
+                                })
+                                tableDiv.innerHTML = `
+                                                    <table style="float:left;margin-right: 20px">
+                                                        <th>......</th>
+                                                        ${tableRows}
+                                                    </table>
+                                            `                
+                            },
+                            complete: function (data) {
+                                vwap_r3_setup();
+                            }
+
+                        });
+
+        }
+
+        function show_visited() {
+
+            let tableDiv = document.getElementById("table5-div");
+            let tableRows = "";
+
+
+            let i = window.localStorage;
+            // iterate over items in local storage
+            for (var key in i) {
+                // skip loop if the property is from prototype
+                if (!i.hasOwnProperty(key)) continue;
+                // your code
+                console.log(key);
+                // console.log(i[key]);
+                tableRows += `
+                                <tr>  
+                        
+                                <td><a onclick="clear_single_item('${key}')" href="#">${key}</a></td>
+                                </tr>
+                            `
+            }
+
+             tableDiv.innerHTML = `
+                                    <table style="float:left;margin-right: 20px">
+                                    <th>visited</th>
+                                    ${tableRows}
+                                    </table>
+                                `
+                            
+
+        }
+
+        function clear_visited(){
+            //clear local stoarage
+            window.localStorage.clear();
+            
+            let tableDiv = document.getElementById("table5-div");
+            let tableRows = "";
+
+
+            let i = window.localStorage;
+            // iterate over items in local storage
+            for (var key in i) {
+                // skip loop if the property is from prototype
+                if (!i.hasOwnProperty(key)) continue;
+                // your code
+                console.log(key);
+                // console.log(i[key]);
+                tableRows += `
+                                <tr>  
+                                <td><h4>${key}</h4></td>
+                                </tr>
+                            `
+            }
+
+             tableDiv.innerHTML = `
+                                    <table style="float:left;margin-right: 20px">
+                                    <th>visited</th>
+                                    ${tableRows}
+                                    </table>
+                                `
+        }
+
+        function clear_single_item(key){
+            // clear key from localstorage
+            window.localStorage.removeItem(key);
+            show_visited();
+        }
+        
+        function process_link_click(key,url){
+            // add key to localstorage
+            localStorage.setItem(key,key);
+
+            // open url in in new tab
+            window.open(url, '_blank');
+
+            show_visited();
+        }
+
+    </script>
+
+
+</body>
+
+</html>

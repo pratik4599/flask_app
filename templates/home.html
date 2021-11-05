@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APP</title>
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'icofile.ico')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <audio src="{{url_for('static',filename='insight.mp3')}}" id="playmusic" filename="insight.mp3"
+        type="audio/mpeg">audio</audio>
+
+    <audio src="{{url_for('static',filename='click.mp3')}}" id="click" filename="click.mp3"
+    type="audio/mpeg">audio</audio>
+
+    <style>
+        body {
+            background-color: #DADED4;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+
+    
+    <div class="everything">
+        <h1>APP</h1>
+        <form id="your-form" action="{{url_for("prev_day")}}" method="post">
+            <input type="text" id="prev_date" name="prev_date" value="1">
+            <input type="text" id="prev_month" name="prev_month" value="11">
+            <input type="text" id="prev_year" name="prev_year" value="2021">
+            <button class="list-group-item list-group-item-action" style="max-width: 200px;" class="btn btn-dark"
+                type="submit">hit me</button>
+        </form>
+
+        <br>
+        <button onclick="api_call_access_token();">api call access token</button>
+        <button onclick="api_call_pre_bullish();">api call pre</button>
+        <br>
+
+    </div>
+
+        <script>
+            
+            $("#your-form").submit(function (e) {
+                        e.preventDefault(); 
+                        
+                        $.ajax({
+                            type: "POST",
+                            url: '/prev_day',
+                            data: $("#your-form").serialize(),
+                            success: function () {
+                                document.getElementById('playmusic').play();
+                                
+                            }
+                        });
+                    });
+
+            function api_call_access_token() {
+                document.getElementById('click').play();
+                $.ajax({
+                    type: "POST",
+                    url: '/access_token',
+                    success: function () {
+                        document.getElementById('playmusic').play();
+                    }
+                });
+            }
+
+            function api_call_pre_bullish() {
+                document.getElementById('click').play();
+                $.ajax({
+                    type: "POST",
+                    url: '/pre_bullish',
+                    success: function (data) {
+                        document.getElementById('playmusic').play();
+                    }
+                });
+            }
+        
+        </script>
+    </body>
+</html>
